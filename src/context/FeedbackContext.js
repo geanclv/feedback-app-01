@@ -11,6 +11,22 @@ export const FeedbackProvider = ({children}) => {
         }
     ])
 
+    // Update object and operation
+    const [feedbackEdit, setFeedbackEdit] = useState({
+        item: {},
+        edit: false
+    })
+    // Set item to be updated
+    const editFeedbackItem = (item) => {
+        setFeedbackEdit({
+            item,
+            edit: true
+        })
+    }
+    const updateFeedback = (id, updItem) => {
+        console.log(id, updItem);
+    }
+
     // Bringing from App.js to be used in context
     const addFeedback = (newFeedback) => {
         // Adding info to our feedback array
@@ -27,8 +43,11 @@ export const FeedbackProvider = ({children}) => {
 
     return <FeedbackContext.Provider value={{
         feedback: feedback,
+        feedbackEdit: feedbackEdit,
+        addFeedback: addFeedback,
         deleteFeedback: deleteFeedback,
-        addFeedback: addFeedback
+        editFeedback: editFeedbackItem,
+        updateFeedback: updateFeedback 
     }}>
         {children}
     </FeedbackContext.Provider>

@@ -1,12 +1,22 @@
 import Card from './shared/Card'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Button from './shared/Button'
 import RatingSelect from './RatingSelect'
 import {v4 as uuidv4} from 'uuid'
 import FeedbackContext from '../context/FeedbackContext'
 
 function FeedbackForm(/*{handleAdd}*/) {
-    const {addFeedback} = useContext(FeedbackContext)
+    const {addFeedback, feedbackEdit, updateFeedback} = useContext(FeedbackContext)
+    useEffect(() => {
+        // enabling form and filling info
+        if(feedbackEdit.edit === true){
+            setBtnDisabled(false)
+            setText(feedbackEdit.item.text)
+            setRating(feedbackEdit.item.rating)
+        }
+    },
+    [feedbackEdit]) //array of dependencies, if you put something there and changes,
+    // the effect run, otherwise, only runs when the component loads
 
     const [text, setText] = useState("")
     const [rating, setRating] = useState()
@@ -38,9 +48,13 @@ function FeedbackForm(/*{handleAdd}*/) {
                 rating: rating
             }
 
-            // handleAdd(newFeedback)
-            addFeedback(newFeedback)
-            
+            if(feedbackEdit.edit === true){
+                updateFeedback(feedbackEdit.item.id, newFeedback)
+            } else {
+                // handleAdd(newFeedback)
+                addFeedback(newFeedback)
+            }
+
             setText("")
             setBtnDisabled(true)
         }
