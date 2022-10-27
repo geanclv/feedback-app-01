@@ -72,7 +72,6 @@ function FeedbackForm(/*{handleAdd}*/) {
                     <Button type="submit"
                         isDisabled={btnDisabled}>Send</Button>
                 </div>
-
                 {message && <div className='message'>{message}</div>}
             </form>
         </Card>
