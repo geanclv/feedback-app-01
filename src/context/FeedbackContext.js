@@ -1,15 +1,25 @@
-import {createContext, useState} from 'react'
+import {createContext, useState, useEffect} from 'react'
 
 const FeedbackContext = createContext()
 
 export const FeedbackProvider = ({children}) => {
-    const [feedback, setFeedback] = useState([
-        {
-            id: 1,
-            text: "From context",
-            rating: 7
-        }
-    ])
+    const [feedback, setFeedback] = useState([])
+
+    // Using the data from server
+    const [isLoading, setIsLoading] = useState(true)
+    useEffect(() => {
+        fetchFeedback()
+    }, [])
+    //Fetching data
+    const URL_BASE = "http://localhost:5000/feedback"
+    const DATA_SORT = "_sort=id&_order=desc"
+    const fetchFeedback = async() => {
+        const response = await fetch(URL_BASE + "?" + DATA_SORT)
+        const data = await response.json()
+
+        setFeedback(data)
+        setIsLoading(false)
+    }
 
     // Update object and operation
     const [feedbackEdit, setFeedbackEdit] = useState({
@@ -54,6 +64,7 @@ export const FeedbackProvider = ({children}) => {
     return <FeedbackContext.Provider value={{
         feedback: feedback,
         feedbackEdit: feedbackEdit,
+        isLoading: isLoading,
         addFeedback: addFeedback,
         deleteFeedback: deleteFeedback,
         editFeedback: editFeedbackItem,
