@@ -2,7 +2,6 @@ import Card from './shared/Card'
 import { useState, useContext, useEffect } from 'react'
 import Button from './shared/Button'
 import RatingSelect from './RatingSelect'
-import {v4 as uuidv4} from 'uuid'
 import FeedbackContext from '../context/FeedbackContext'
 
 function FeedbackForm(/*{handleAdd}*/) {
@@ -43,7 +42,6 @@ function FeedbackForm(/*{handleAdd}*/) {
         e.preventDefault()
         if(text.trim().length > 10) {
             const newFeedback = {
-                id: uuidv4(),
                 text: text,
                 rating: rating
             }
