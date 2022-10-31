@@ -11,7 +11,8 @@ export const FeedbackProvider = ({children}) => {
         fetchFeedback()
     }, [])
     //Fetching data
-    const URL_BASE = "http://localhost:5000/feedback"
+    //const URL_BASE = "http://localhost:5000/feedback" //original URL
+    const URL_BASE = "/feedback" //URL using proxy configured in package.json
     const DATA_SORT = "_sort=id&_order=desc"
     const fetchFeedback = async() => {
         const response = await fetch(URL_BASE + "?" + DATA_SORT)
